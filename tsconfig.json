@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext"],
+    "jsx": "react-native",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "noImplicitAny": true
+  },
+  "include": [
+    "src/**/*" // Adjust the path to match your project structure
+  ],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/*" // Exclude test files
+  ]
+}
