@@ -6,7 +6,7 @@ import Heading from '../../components/Headings/Heading';
 import SubHeading from '../../components/SubHeading/SubHeading';
 import {CONS_COLOR, WHITE} from '../../styles/Colors';
 import {useNavigation} from '@react-navigation/native';
-import {DilemmaType} from '../../services/ReduxToolkit/dataSlice';
+import {DilemmaType} from '../../services/ReduxToolkit/argumentSlice';
 import {RootStackParamList} from '../../navigation/MainNavigation/MainNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 

@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import FormattedList from '../../../CustomComponents/FormattedList';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../services/ReduxToolkit/store';
-import {DilemmaType} from '../../../services/ReduxToolkit/dataSlice';
+import {DilemmaType} from '../../../services/ReduxToolkit/argumentSlice';
 
 type TrashConsProps = {
   selectedItem: DilemmaType;

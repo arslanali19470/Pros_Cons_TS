@@ -76,7 +76,7 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
     if (!trimmedDescription || trimmedDescription.split(' ').length < 1) {
       Alert.alert(
         'Invalid Description',
-        'Description must be at least 1 words.',
+        'Description must be at least 1 word.',
       );
       return false;
     }
@@ -88,7 +88,13 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
       Alert.alert('Invalid Type', 'Please select a valid type.');
       return false;
     }
-    if (argumentArray.some(item => item.description === trimmedDescription)) {
+    const isDuplicate = argumentArray.some(item =>
+      isUpdateMode
+        ? item.description === trimmedDescription &&
+          item.id !== selectedItem?.id
+        : item.description === trimmedDescription,
+    );
+    if (isDuplicate) {
       Alert.alert('Duplicate Description', 'The description already exists.');
       return false;
     }
@@ -137,6 +143,7 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
       dispatchUpdate(selectedItem.id, textInput, sliderValue, selectedId);
     }
   };
+
   const radioButtons = useMemo<RadioButtonProps[]>(
     () => [
       {

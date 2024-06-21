@@ -1,7 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
+// Ensure this interface matches the one in argumentSlice.ts
 export interface DilemmaType {
   id: string;
+  description: string;
+  importance: number;
+  type: string;
   TopicName: string;
   ItemDate: string;
   ItemTime: string;
@@ -10,13 +14,13 @@ export interface DilemmaType {
 export type ReduxStateType = {
   array1: DilemmaType[];
   removedItems: DilemmaType[];
-  updated: DilemmaType[]; // Ensure this part is added to your initial state
+  updated: DilemmaType[];
 };
 
 const initialState: ReduxStateType = {
   array1: [],
   removedItems: [],
-  updated: [], // Ensure this part is added to your initial state
+  updated: [],
 };
 
 const dataSlice = createSlice({

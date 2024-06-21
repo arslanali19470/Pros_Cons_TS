@@ -107,6 +107,9 @@ const Add_Dilemmas: React.FC<AddDilemmasScreenProps> = ({
         TopicName: trimmedInputValue,
         ItemDate: ItemDate,
         ItemTime: ItemTime,
+        description: '',
+        importance: 0,
+        type: '',
       };
 
       dispatch(PushToArray(newItem));
