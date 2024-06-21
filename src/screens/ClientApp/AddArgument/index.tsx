@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View, Alert} from 'react-native';
 import Slider from '@react-native-community/slider';
 import Space from '../../../components/spacer/Space';
 import CircularBorder from '../../../components/CircularBorder/CircularBorder';
@@ -8,7 +8,7 @@ import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group';
 import GradientButton from '../../../components/Gradiant_Button/Gradiant_Button';
 import {BLUE1, BLUE2} from '../../../styles/Colors';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   Argument_Add_Array,
   Argument_Update_Array,
@@ -19,6 +19,7 @@ import uuid from 'react-native-uuid';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/MainNavigation/MainNavigation';
+import {RootState} from '../../../services/ReduxToolkit/store';
 
 type ArgumentNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -37,6 +38,9 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
   const [textInput, setTextInput] = useState('');
   const navigation = useNavigation<ArgumentNavigationProp>();
   const dispatch = useDispatch();
+  const argumentArray = useSelector(
+    (state: RootState) => state.argument.argumentArray,
+  );
 
   const selectedItem: ArgumentType | undefined = route?.params?.selectedItem;
   const {mode} = route.params;
@@ -53,23 +57,42 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
   const handleSliderChange = (value: number) => {
     const roundedValue = Math.round(value);
     setSliderValue(roundedValue);
-    if (selectedItem) {
-      dispatchUpdate(selectedItem.id, textInput, roundedValue, selectedId);
-    }
   };
 
   const handleTextInputChange = (text: string) => {
     setTextInput(text);
-    if (selectedItem) {
-      dispatchUpdate(selectedItem.id, text, sliderValue, selectedId);
-    }
   };
 
   const handleRadioButtonChange = (id: string) => {
     setSelectedId(id);
-    if (selectedItem) {
-      dispatchUpdate(selectedItem.id, textInput, sliderValue, id);
+  };
+
+  const validateInput = (
+    description: string,
+    importance: number,
+    type: string | undefined,
+  ) => {
+    const trimmedDescription = description.trim();
+    if (!trimmedDescription || trimmedDescription.split(' ').length < 1) {
+      Alert.alert(
+        'Invalid Description',
+        'Description must be at least 1 words.',
+      );
+      return false;
     }
+    if (!importance) {
+      Alert.alert('Invalid Importance', 'Please select an importance level.');
+      return false;
+    }
+    if (!type || (type !== '1' && type !== '2')) {
+      Alert.alert('Invalid Type', 'Please select a valid type.');
+      return false;
+    }
+    if (argumentArray.some(item => item.description === trimmedDescription)) {
+      Alert.alert('Duplicate Description', 'The description already exists.');
+      return false;
+    }
+    return true;
   };
 
   const dispatchUpdate = (
@@ -78,17 +101,42 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
     importance: number,
     type: string | undefined,
   ) => {
+    if (!validateInput(description, importance, type)) {
+      return;
+    }
     dispatch(
       Argument_Update_Array({
         id,
-        description,
+        description: description.trim(),
         importance,
         type: type || '',
         TopicName: selectedItem?.TopicName || '',
       }),
     );
+    navigation.goBack();
   };
 
+  const addProsConsList = () => {
+    if (!validateInput(textInput, sliderValue, selectedId)) {
+      return;
+    }
+    const newItem: ArgumentType = {
+      id: uuid.v4() as string,
+      description: textInput.trim(),
+      importance: sliderValue,
+      type: selectedId || '',
+      TopicName: selectedItem?.TopicName || '',
+    };
+
+    dispatch(Argument_Add_Array(newItem));
+    navigation.goBack();
+  };
+
+  const UpdateProsConsList = () => {
+    if (selectedItem) {
+      dispatchUpdate(selectedItem.id, textInput, sliderValue, selectedId);
+    }
+  };
   const radioButtons = useMemo<RadioButtonProps[]>(
     () => [
       {
@@ -104,27 +152,6 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
     ],
     [],
   );
-
-  const addProsConsList = () => {
-    const newItem: ArgumentType = {
-      id: uuid.v4() as string,
-      description: textInput,
-      importance: sliderValue,
-      type: selectedId || '',
-      TopicName: selectedItem?.TopicName || '',
-    };
-
-    dispatch(Argument_Add_Array(newItem));
-    navigation.goBack();
-  };
-
-  const UpdateProsConsList = () => {
-    if (selectedItem) {
-      dispatchUpdate(selectedItem.id, textInput, sliderValue, selectedId);
-    }
-
-    navigation.goBack();
-  };
 
   return (
     <View style={{flex: 1, padding: 10, justifyContent: 'space-between'}}>
