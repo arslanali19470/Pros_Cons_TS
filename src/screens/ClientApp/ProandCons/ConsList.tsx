@@ -35,7 +35,10 @@ const ConsList: React.FC<ConsListProps> = ({selectedItem}) => {
   );
 
   const handleConsDetails = (item: ArgumentType) => {
-    navigation.navigate('Argument', {selectedItem: item});
+    navigation.navigate('Argument', {
+      selectedItem: item,
+      mode: 'update',
+    });
   };
 
   return (

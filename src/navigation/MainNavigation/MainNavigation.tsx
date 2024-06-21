@@ -18,7 +18,7 @@ export type RootStackParamList = {
   SearchHome: undefined;
   ProandCons: {selectedItem: DilemmaType};
   'Dilemmas Description': {selectedItem: ArgumentType | DilemmaType};
-  Argument: {selectedItem: ArgumentType | DilemmaType};
+  Argument: {selectedItem: ArgumentType | DilemmaType; mode: 'add' | 'update'};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

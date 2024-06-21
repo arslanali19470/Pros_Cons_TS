@@ -1,7 +1,7 @@
 // ProandCons.tsx
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Row} from 'native-base';
+import {Row, VStack} from 'native-base';
 import {MaterialIcons} from '../../../utils/AppConstants';
 import Heading from '../../../components/Headings/Heading';
 import Space from '../../../components/spacer/Space';
@@ -22,6 +22,7 @@ type ProsConsNavigationProp = StackNavigationProp<
   RootStackParamList,
   'ProandCons'
 >;
+
 type ProsConsRouteProp = RouteProp<RootStackParamList, 'ProandCons'>;
 
 export type ProsConsScreenProps = {
@@ -39,18 +40,18 @@ const ProandCons: React.FC<ProsConsScreenProps> = ({route, navigation}) => {
     filteredProsArray.length === 0 && filteredConsArray.length === 0;
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1}}>
       <Head_ProsCons selectedItem={selectedItem as DilemmaType} />
       <ProgressProsCons />
-      <View style={styles.contentContainer}>
+      <View style={{flex: 1, justifyContent: 'space-between'}}>
         {isEmpty ? (
-          <View style={styles.emptyContainer}>
+          <View>
             <Space height={140} />
             <MaterialIcons
               name="source"
               size={150}
               color="lightgray"
-              style={styles.icon}
+              style={{alignSelf: 'center'}}
             />
             <Heading
               text="there is no argument, yet"
@@ -61,17 +62,23 @@ const ProandCons: React.FC<ProsConsScreenProps> = ({route, navigation}) => {
           </View>
         ) : (
           <View>
-            <Heading text="Pros" style={styles.heading} />
+            <Heading text="Pros" style={{padding: 20}} />
             <Row style={styles.row}>
               <ProsList selectedItem={selectedItem} />
               <ConsList selectedItem={selectedItem} />
             </Row>
           </View>
         )}
+
         <Space height={40} />
         <Gradiant_Button
           title="ADD ARGUMENT"
-          onPress={() => navigation.navigate('Argument', {selectedItem})}
+          onPress={() =>
+            navigation.navigate('Argument', {
+              selectedItem,
+              mode: 'add',
+            })
+          }
           color="white"
           alignSelf="flex-end"
           marginRight={20}
@@ -87,11 +94,6 @@ const ProandCons: React.FC<ProsConsScreenProps> = ({route, navigation}) => {
 export default ProandCons;
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
-  contentContainer: {flex: 1, justifyContent: 'space-between'},
-  emptyContainer: {alignItems: 'center'},
-  icon: {alignSelf: 'center'},
-  heading: {padding: 20},
   row: {
     borderWidth: 1,
     borderColor: 'lightgray',

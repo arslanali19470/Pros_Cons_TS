@@ -33,7 +33,10 @@ const ProsList: React.FC<ProsListProps> = ({selectedItem}) => {
   );
 
   const handleProsDetails = (item: ArgumentType) => {
-    navigation.navigate('Argument', {selectedItem: item});
+    navigation.navigate('Argument', {
+      selectedItem: item,
+      mode: 'update',
+    });
   };
 
   return (

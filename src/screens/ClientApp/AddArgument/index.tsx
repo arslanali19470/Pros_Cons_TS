@@ -9,8 +9,11 @@ import GradientButton from '../../../components/Gradiant_Button/Gradiant_Button'
 import {BLUE1, BLUE2} from '../../../styles/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-// import {AddArgument} from '../../../services/ReduxToolkit/argumentSlice';
-import {Argument_Add_Array} from '../../../services/ReduxToolkit/argumentSlice';
+import {
+  Argument_Add_Array,
+  Argument_Update_Array,
+  ArgumentType,
+} from '../../../services/ReduxToolkit/argumentSlice';
 import uuid from 'react-native-uuid';
 
 import {RouteProp} from '@react-navigation/native';
@@ -32,22 +35,58 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
   const [sliderValue, setSliderValue] = useState<number>(0);
   const [selectedId, setSelectedId] = useState<string | undefined>();
   const [textInput, setTextInput] = useState('');
-  const navigation = useNavigation();
+  const navigation = useNavigation<ArgumentNavigationProp>();
   const dispatch = useDispatch();
 
-  const selectedItem = route?.params?.selectedItem;
+  const selectedItem: ArgumentType | undefined = route?.params?.selectedItem;
+  const {mode} = route.params;
+  const isUpdateMode = mode === 'update';
 
   useEffect(() => {
     if (selectedItem) {
-      setTextInput(selectedItem.description || ''); // Set TextInput value
-      setSliderValue(selectedItem.importance || 0); // Set Slider value
-      setSelectedId(selectedItem.type || undefined); // Set Radio button value
+      setTextInput(selectedItem.description || '');
+      setSliderValue(selectedItem.importance || 0);
+      setSelectedId(selectedItem.type || undefined);
     }
   }, [selectedItem]);
 
   const handleSliderChange = (value: number) => {
     const roundedValue = Math.round(value);
     setSliderValue(roundedValue);
+    if (selectedItem) {
+      dispatchUpdate(selectedItem.id, textInput, roundedValue, selectedId);
+    }
+  };
+
+  const handleTextInputChange = (text: string) => {
+    setTextInput(text);
+    if (selectedItem) {
+      dispatchUpdate(selectedItem.id, text, sliderValue, selectedId);
+    }
+  };
+
+  const handleRadioButtonChange = (id: string) => {
+    setSelectedId(id);
+    if (selectedItem) {
+      dispatchUpdate(selectedItem.id, textInput, sliderValue, id);
+    }
+  };
+
+  const dispatchUpdate = (
+    id: string,
+    description: string,
+    importance: number,
+    type: string | undefined,
+  ) => {
+    dispatch(
+      Argument_Update_Array({
+        id,
+        description,
+        importance,
+        type: type || '',
+        TopicName: selectedItem?.TopicName || '',
+      }),
+    );
   };
 
   const radioButtons = useMemo<RadioButtonProps[]>(
@@ -67,15 +106,23 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
   );
 
   const addProsConsList = () => {
-    const newItem = {
+    const newItem: ArgumentType = {
       id: uuid.v4() as string,
       description: textInput,
       importance: sliderValue,
       type: selectedId || '',
-      TopicName: selectedItem?.TopicName || '', // Include TopicName
+      TopicName: selectedItem?.TopicName || '',
     };
 
     dispatch(Argument_Add_Array(newItem));
+    navigation.goBack();
+  };
+
+  const UpdateProsConsList = () => {
+    if (selectedItem) {
+      dispatchUpdate(selectedItem.id, textInput, sliderValue, selectedId);
+    }
+
     navigation.goBack();
   };
 
@@ -90,7 +137,7 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
           placeholder="Description"
           placeholderTextColor={'gray'}
           value={textInput}
-          onChangeText={setTextInput}
+          onChangeText={handleTextInputChange}
         />
         <Space height={30} />
         <CircularBorder b_color={BLUE1} style={{alignSelf: 'center'}}>
@@ -110,26 +157,35 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
         <View style={{alignSelf: 'flex-start', marginLeft: 10}}>
           <RadioGroup
             radioButtons={radioButtons}
-            onPress={setSelectedId}
+            onPress={handleRadioButtonChange}
             selectedId={selectedId}
-            // borderColor="red"
-            // color="red"
-            // selectedButtonStyle={{backgroundColor: 'red'}}
-            // buttonContainerStyle={{borderColor: 'red'}}
             labelStyle={{color: 'black'}}
           />
         </View>
       </View>
-      <GradientButton
-        title={'SAVE'}
-        color={'white'}
-        alignSelf="flex-end"
-        marginRight={20}
-        marginBottom={20}
-        width={'120%'}
-        fontSize={13}
-        onPress={addProsConsList}
-      />
+      {isUpdateMode ? (
+        <GradientButton
+          title={'Update'}
+          color={'white'}
+          alignSelf="flex-end"
+          marginRight={20}
+          marginBottom={20}
+          width={'120%'}
+          fontSize={13}
+          onPress={UpdateProsConsList}
+        />
+      ) : (
+        <GradientButton
+          title={'SAVE'}
+          color={'white'}
+          alignSelf="flex-end"
+          marginRight={20}
+          marginBottom={20}
+          width={'120%'}
+          fontSize={13}
+          onPress={addProsConsList}
+        />
+      )}
     </View>
   );
 };
