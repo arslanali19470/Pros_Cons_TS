@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-// Ensure this interface matches the one in argumentSlice.ts
 export interface DilemmaType {
   id: string;
   description: string;
@@ -48,10 +47,31 @@ const dataSlice = createSlice({
         state.removedItems.push(item);
       }
     },
+    PermanentlyDeleteFromRemovedItems: (
+      state,
+      action: PayloadAction<string>,
+    ) => {
+      state.removedItems = state.removedItems.filter(
+        i => i.id !== action.payload,
+      );
+    },
+    RestoreToArray: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+      const item = state.removedItems.find(i => i.id === id);
+      if (item) {
+        state.removedItems = state.removedItems.filter(i => i.id !== id);
+        state.array1.push(item);
+      }
+    },
   },
 });
 
-export const {PushToArray, UpdateArrayItem, DeleteFromArray} =
-  dataSlice.actions;
+export const {
+  PushToArray,
+  UpdateArrayItem,
+  DeleteFromArray,
+  PermanentlyDeleteFromRemovedItems,
+  RestoreToArray,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;
