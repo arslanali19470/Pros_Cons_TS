@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
+// Define the structure of a dilemma item
 export interface DilemmaType {
   id: string;
   description: string;
@@ -10,18 +11,23 @@ export interface DilemmaType {
   ItemTime: string;
 }
 
+// Define the structure of the Redux state
 export type ReduxStateType = {
   array1: DilemmaType[];
   removedItems: DilemmaType[];
   updated: DilemmaType[];
+  selectedItems: DilemmaType[];
 };
 
+// Initial state
 const initialState: ReduxStateType = {
   array1: [],
   removedItems: [],
   updated: [],
+  selectedItems: [],
 };
 
+// Create the data slice
 const dataSlice = createSlice({
   name: 'data',
   initialState,
@@ -63,15 +69,23 @@ const dataSlice = createSlice({
         state.array1.push(item);
       }
     },
+    ClearSelection: (state, action: PayloadAction<string>) => {
+      const payloadId = action.payload;
+      state.selectedItems = state.selectedItems.filter(
+        item => item.id !== payloadId,
+      );
+    },
   },
 });
 
+// Export the actions and reducer
 export const {
   PushToArray,
   UpdateArrayItem,
   DeleteFromArray,
   PermanentlyDeleteFromRemovedItems,
   RestoreToArray,
+  ClearSelection,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

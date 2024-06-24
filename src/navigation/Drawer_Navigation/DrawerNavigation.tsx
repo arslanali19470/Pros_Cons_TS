@@ -84,6 +84,7 @@ const DrawerNavigation: React.FC<DrawerScreenProps> = () => {
         component={Home_Dilemmas}
         options={{
           drawerIcon: ({color}) => <BarIcon color={color} />,
+          headerShown: false,
         }}
       />
       <Drawer.Screen
