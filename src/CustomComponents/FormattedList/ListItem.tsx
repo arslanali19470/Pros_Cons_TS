@@ -2,10 +2,10 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
 import {Row} from 'native-base';
-import {MaterialIcons} from '../../utils/AppConstants';
+import {MaterialIcons, multiThemeColor} from '../../utils/AppConstants';
 import Heading from '../../components/Headings/Heading';
 import SubHeading from '../../components/SubHeading/SubHeading';
-import {CONS_COLOR, WHITE} from '../../styles/Colors';
+// import {CONS_COLOR, WHITE} from '../../styles/Colors';
 import {
   DeleteFromArray,
   PermanentlyDeleteFromRemovedItems,
@@ -41,7 +41,10 @@ const ListItem: React.FC<ListItemProps> = ({
   currentColor,
 }) => {
   const isSelected = currentColor && selectedItems.includes(item.id);
-  const backgroundColor = isSelected ? 'lightgray' : WHITE;
+  const IconColor = multiThemeColor().textcolor;
+  const backgroundColor = isSelected
+    ? 'lightgray'
+    : multiThemeColor().main_background;
 
   const RightSwip = (itemId: string) => (
     <TouchableOpacity
@@ -54,7 +57,7 @@ const ListItem: React.FC<ListItemProps> = ({
           dispatch(DeleteFromArray(itemId));
         }
       }}>
-      <MaterialIcons name={'delete'} color="black" size={32} />
+      <MaterialIcons name={'delete'} color={IconColor} size={32} />
     </TouchableOpacity>
   );
 
@@ -64,7 +67,7 @@ const ListItem: React.FC<ListItemProps> = ({
       onPress={() => {
         dispatch(RestoreToArray(itemId));
       }}>
-      <MaterialIcons name={'delete-forever'} color="black" size={32} />
+      <MaterialIcons name={'delete-forever'} color={IconColor} size={32} />
     </TouchableOpacity>
   );
 
@@ -85,11 +88,16 @@ const ListItem: React.FC<ListItemProps> = ({
             alignItems={'center'}
             width={'95%'}
             alignSelf={'center'}>
-            <View style={[styles.circle, isSelected && styles.selectedCircle]}>
+            <View
+              style={[
+                styles.circle,
+                {backgroundColor: multiThemeColor().CONS_COLOR},
+                isSelected && styles.selectedCircle,
+              ]}>
               <Heading
                 text={isSelected ? '\u2713' : item.TopicName.charAt(0)}
                 textAlign={'center'}
-                color={WHITE}
+                color={'white'}
               />
             </View>
             <View>
@@ -120,7 +128,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'lightgray',
     borderRadius: 10,
-    backgroundColor: WHITE,
+    // backgroundColor: WHITE,
+    backgroundColor: 'red',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -136,7 +145,7 @@ const styles = StyleSheet.create({
   circle: {
     width: 50,
     height: 50,
-    backgroundColor: CONS_COLOR,
+    // backgroundColor: multiThemeColor().CONS_COLOR,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',

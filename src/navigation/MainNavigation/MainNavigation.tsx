@@ -6,12 +6,13 @@ import AddDilemmas from '../../screens/ClientApp/AddDilemmas';
 import SearchHome from '../../screens/ClientApp/Search_Home';
 import ProandCons from '../../screens/ClientApp/ProandCons';
 import AddArgument from '../../screens/ClientApp/AddArgument';
-import {BLACK, GRAY, WHITE} from '../../styles/Colors';
+// import {BLACK, GRAY, WHITE} from '../../styles/Colors';
 import {
   DilemmaType,
   ArgumentType,
 } from '../../services/ReduxToolkit/argumentSlice';
 import SplashScreen from '../../screens/ClientApp/SplashScreen'; // Import SplashScreen
+import {multiThemeColor} from '../../utils/AppConstants';
 
 export type RootStackParamList = {
   SplashScreen: undefined;
@@ -26,12 +27,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const MainNavigation: React.FC = () => {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(true);
+  const color = multiThemeColor();
 
   return (
     <>
       <StatusBar
         barStyle={isDarkTheme ? 'light-content' : 'dark-content'}
-        backgroundColor={isDarkTheme ? BLACK : WHITE}
+        backgroundColor={isDarkTheme ? color.BLACK : color.WHITE}
       />
       <Stack.Navigator
         initialRouteName="SplashScreen" // Set SplashScreen as the initial route
@@ -45,8 +47,8 @@ const MainNavigation: React.FC = () => {
           component={AddDilemmas}
           options={{
             headerShown: true,
-            headerStyle: {backgroundColor: GRAY},
-            headerTintColor: WHITE,
+            headerStyle: {backgroundColor: multiThemeColor().GRAY},
+            headerTintColor: color.OnlyWHITE,
           }}
         />
         <Stack.Screen
@@ -54,8 +56,8 @@ const MainNavigation: React.FC = () => {
           component={SearchHome}
           options={{
             headerShown: false,
-            headerStyle: {backgroundColor: GRAY},
-            headerTintColor: WHITE,
+            headerStyle: {backgroundColor: multiThemeColor().GRAY},
+            headerTintColor: color.OnlyWHITE,
           }}
         />
         <Stack.Screen
@@ -63,8 +65,8 @@ const MainNavigation: React.FC = () => {
           component={ProandCons}
           options={{
             headerShown: false,
-            headerStyle: {backgroundColor: GRAY},
-            headerTintColor: WHITE,
+            headerStyle: {backgroundColor: multiThemeColor().GRAY},
+            headerTintColor: color.OnlyWHITE,
           }}
         />
         <Stack.Screen
@@ -72,8 +74,8 @@ const MainNavigation: React.FC = () => {
           component={AddArgument}
           options={{
             headerShown: true,
-            headerStyle: {backgroundColor: GRAY},
-            headerTintColor: WHITE,
+            headerStyle: {backgroundColor: multiThemeColor().GRAY},
+            headerTintColor: color.OnlyWHITE,
           }}
         />
       </Stack.Navigator>

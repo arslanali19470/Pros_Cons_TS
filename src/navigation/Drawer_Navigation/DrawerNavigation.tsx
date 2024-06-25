@@ -17,9 +17,9 @@ import CustomDrawerContent from '../../components/CustomDrawerContent/CustomDraw
 import HeaderLeft from '../../components/HeaderLeft/HeaderLeft';
 import Settings from '../../screens/ClientApp/Settings/Index';
 import ProFeatcher from '../../screens/ClientApp/ProFeatcher';
-import {BLUE2, GRAY} from '../../styles/Colors';
+// import {BLUE2, GRAY} from '../../styles/Colors';
 import {BarIcon, TrashIcon, SettingsIcon, CartIcon} from '../../utils/Icons';
-import {MaterialIcons} from '../../utils/AppConstants';
+import {MaterialIcons, multiThemeColor} from '../../utils/AppConstants';
 import {RootStackParamList} from '../MainNavigation/MainNavigation';
 
 // Type definitions for navigation and route
@@ -55,12 +55,18 @@ const DrawerNavigation: React.FC<DrawerScreenProps> = () => {
     <Drawer.Navigator
       drawerContent={props => <CustomDrawerContent {...props} />}
       screenOptions={{
+        drawerActiveBackgroundColor: multiThemeColor().BLUE2,
+        drawerStyle: {
+          backgroundColor: multiThemeColor().main_background,
+        },
+        drawerLabelStyle: {
+          color: multiThemeColor().textcolor,
+        },
         drawerActiveTintColor: 'white',
-        drawerActiveBackgroundColor: BLUE2,
-        drawerStyle: {},
+
         drawerPosition: 'left',
         headerStyle: {
-          backgroundColor: GRAY,
+          backgroundColor: multiThemeColor().GRAY,
         },
         drawerType: 'back',
         headerShadowVisible: false,
@@ -83,7 +89,7 @@ const DrawerNavigation: React.FC<DrawerScreenProps> = () => {
         name="Dilemmas"
         component={Home_Dilemmas}
         options={{
-          drawerIcon: ({color}) => <BarIcon color={color} />,
+          drawerIcon: () => <BarIcon color={multiThemeColor().textcolor} />,
           headerShown: false,
         }}
       />
@@ -91,14 +97,17 @@ const DrawerNavigation: React.FC<DrawerScreenProps> = () => {
         name="Trash"
         component={Trash}
         options={{
-          drawerIcon: ({color}) => <TrashIcon color={color} />,
+          drawerIcon: () => <TrashIcon color={multiThemeColor().textcolor} />,
+          headerShown: false,
         }}
       />
       <Drawer.Screen
         name="Settings"
         component={Settings}
         options={{
-          drawerIcon: ({color}) => <SettingsIcon color={color} />,
+          drawerIcon: () => (
+            <SettingsIcon color={multiThemeColor().textcolor} />
+          ),
           headerShown: false,
         }}
       />
@@ -106,7 +115,7 @@ const DrawerNavigation: React.FC<DrawerScreenProps> = () => {
         name="Pro Features"
         component={ProFeatcher}
         options={{
-          drawerIcon: ({color}) => <CartIcon color={color} />,
+          drawerIcon: () => <CartIcon color={multiThemeColor().textcolor} />,
           headerShown: false,
         }}
       />

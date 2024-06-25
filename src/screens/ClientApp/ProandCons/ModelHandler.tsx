@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 import Heading from '../../../components/Headings/Heading';
 import Space from '../../../components/spacer/Space';
 import Gradiant_Button from '../../../components/Gradiant_Button/Gradiant_Button';
+import {multiThemeColor} from '../../../utils/AppConstants';
 interface ModalHandlerProps {
   isModalVisible: boolean;
   toggleModal: () => void;
@@ -17,7 +18,11 @@ export const ModelHandler: React.FC<ModalHandlerProps> = ({
 }) => {
   return (
     <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
-      <View style={styles.modal}>
+      <View
+        style={[
+          styles.modal,
+          {backgroundColor: multiThemeColor().main_background},
+        ]}>
         <Heading text="Argument Settings" textAlign="center" />
         <Space height={20} />
         <Row justifyContent="space-between">
@@ -53,7 +58,7 @@ export const ModelHandler: React.FC<ModalHandlerProps> = ({
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
   },

@@ -1,14 +1,26 @@
-import React from "react";
-import { StyleSheet, Text, TextStyle } from "react-native";
-import { multiThemeColor, normalizedFont } from "../../utils/AppConstants";
+import React from 'react';
+import {StyleSheet, Text, TextStyle} from 'react-native';
+import {multiThemeColor, normalizedFont} from '../../utils/AppConstants';
 
 interface SubHeadingProps {
   text: string;
-  textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
+  textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify' | undefined;
   color?: string;
   marginLeft?: number;
   marginRight?: number;
-  fontWeight?: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | undefined;
+  fontWeight?:
+    | 'normal'
+    | 'bold'
+    | '100'
+    | '200'
+    | '300'
+    | '400'
+    | '500'
+    | '600'
+    | '700'
+    | '800'
+    | '900'
+    | undefined;
   fontSize?: number;
   fontFamily?: string;
   marginTop?: number;
@@ -37,19 +49,18 @@ const SubHeading: React.FC<SubHeadingProps> = ({
     <Text
       onPress={onPress}
       style={{
-        textAlign: textAlign || "left",
+        textAlign: textAlign || 'left',
         fontSize: fontSize || normalizedFont.rf(1.8),
         color: color || multiThemeColor().textcolor,
         marginLeft: marginLeft,
         marginRight: marginRight,
-        fontWeight: fontWeight as TextStyle["fontWeight"],
+        fontWeight: fontWeight as TextStyle['fontWeight'],
         fontFamily: fontFamily,
         marginTop: marginTop,
         marginBottom: marginBottom,
         marginVertical: marginVertical,
         marginHorizontal: marginHorizontal,
-      }}
-    >
+      }}>
       {text}
     </Text>
   );

@@ -1,7 +1,7 @@
 // ConsList.tsx
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {PROS_COLOR} from '../../../styles/Colors';
+// import {PROS_COLOR} from '../../../styles/Colors';
 import Heading from '../../../components/Headings/Heading';
 import {Row} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
@@ -13,6 +13,7 @@ import {
 } from '../../../services/ReduxToolkit/argumentSlice';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/MainNavigation/MainNavigation';
+import {multiThemeColor} from '../../../utils/AppConstants';
 
 interface ConsListProps {
   selectedItem: ArgumentType | DilemmaType;
@@ -50,7 +51,11 @@ const ConsList: React.FC<ConsListProps> = ({selectedItem}) => {
             alignItems="center"
             space={2}
             style={styles.row}>
-            <View style={styles.circle}>
+            <View
+              style={[
+                styles.circle,
+                {backgroundColor: multiThemeColor().PROS_COLOR},
+              ]}>
               <Heading text="10" color="white" fontSize={15} />
             </View>
             <Heading text={item.description} fontSize={14} />
@@ -86,7 +91,7 @@ const styles = StyleSheet.create({
   circle: {
     width: 30,
     height: 30,
-    backgroundColor: PROS_COLOR,
+    // backgroundColor: PROS_COLOR,
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',

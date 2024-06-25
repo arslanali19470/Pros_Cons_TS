@@ -2,7 +2,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Row, VStack} from 'native-base';
-import {MaterialIcons} from '../../../utils/AppConstants';
+import {MaterialIcons, multiThemeColor} from '../../../utils/AppConstants';
 import Heading from '../../../components/Headings/Heading';
 import Space from '../../../components/spacer/Space';
 import Gradiant_Button from '../../../components/Gradiant_Button/Gradiant_Button';
@@ -40,7 +40,7 @@ const ProandCons: React.FC<ProsConsScreenProps> = ({route, navigation}) => {
     filteredProsArray.length === 0 && filteredConsArray.length === 0;
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: multiThemeColor().main_background}}>
       <Head_ProsCons selectedItem={selectedItem as DilemmaType} />
       <ProgressProsCons />
       <View style={{flex: 1, justifyContent: 'space-between'}}>

@@ -35,14 +35,13 @@
 // export const GRADIENT_LIGHT_BLUE_1 = '#8AC7DB';
 // export const GRADIENT_LIGHT_BLUE_2 = '#67B7D1';
 // ====================================================================================
-export const BLACK = '#181c1c';
-export const GRAY = '#282c34';
-export const BLUE1 = '#26c4f5';
-export const BLUE2 = '#4976e8';
-export const BLUE3 = '#4ce4fc';
-export const BLUE4 = '#bbe5f5';
-export const PROS_COLOR = '#80a4fc';
-export const CONS_COLOR = '#ff4484';
-export const WHITE = '#ffff';
-export const TRANSPARENT = 'transparent';
-
+// export const BLACK = '#181c1c';
+// export const GRAY = '#282c34';
+// export const BLUE1 = '#26c4f5';
+// export const BLUE2 = '#4976e8';
+// export const BLUE3 = '#4ce4fc';
+// export const BLUE4 = '#bbe5f5';
+// export const PROS_COLOR = '#80a4fc';
+// export const CONS_COLOR = '#ff4484';
+// export const WHITE = '#ffff';
+// export const TRANSPARENT = 'transparent';

@@ -6,10 +6,14 @@ import {
   NavigationProp,
   useIsFocused,
 } from '@react-navigation/native';
-import {MaterialIcons, Modal} from '../../../utils/AppConstants';
+import {
+  MaterialIcons,
+  Modal,
+  multiThemeColor,
+} from '../../../utils/AppConstants';
 import Heading from '../../../components/Headings/Heading';
 import Space from '../../../components/spacer/Space';
-import {GRAY, WHITE} from '../../../styles/Colors';
+// import {GRAY, WHITE} from '../../../styles/Colors';
 import Gradiant_Button from '../../../components/Gradiant_Button/Gradiant_Button';
 import {ModelHandler} from './ModelHandler';
 import {DilemmaType} from '../../../services/ReduxToolkit/dataSlice';
@@ -70,7 +74,7 @@ const Head_ProsCons: React.FC<HeadProsConsProps> = ({selectedItem}) => {
 
   return (
     <>
-      <View style={styles.header}>
+      <View style={[styles.header, {backgroundColor: multiThemeColor().GRAY}]}>
         <Space height={15} />
         <Row
           justifyContent="space-between"
@@ -100,16 +104,29 @@ const Head_ProsCons: React.FC<HeadProsConsProps> = ({selectedItem}) => {
           </Row>
         </Row>
         <Space height={20} />
-        <Text style={{color: WHITE, padding: 5, fontSize: 18}}>
+        <Text
+          style={{
+            color: 'white',
+            padding: 5,
+            fontSize: 18,
+          }}>
           {topicName}
         </Text>
         <Space height={20} />
-        <TouchableOpacity style={styles.editButton}>
+        <TouchableOpacity
+          style={[
+            styles.editButton,
+            {backgroundColor: multiThemeColor().OnlyWHITE},
+          ]}>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('Dilemmas Description', {selectedItem})
             }>
-            <MaterialIcons name="mode-edit" color={GRAY} size={30} />
+            <MaterialIcons
+              name="mode-edit"
+              color={multiThemeColor().GRAY}
+              size={30}
+            />
           </TouchableOpacity>
         </TouchableOpacity>
       </View>
@@ -119,7 +136,11 @@ const Head_ProsCons: React.FC<HeadProsConsProps> = ({selectedItem}) => {
         isVisible={isMoreVisible}
         onBackdropPress={() => setMoreVisible(false)}
         style={{margin: 0}}>
-        <View style={styles.modalContent}>
+        <View
+          style={[
+            styles.modalContent,
+            {backgroundColor: multiThemeColor().main_background},
+          ]}>
           <TouchableOpacity onPress={handleShare}>
             <Heading text="Share" />
           </TouchableOpacity>
@@ -170,7 +191,7 @@ export default Head_ProsCons;
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: GRAY,
+    // backgroundColor: GRAY,
     padding: 10,
     position: 'relative',
   },
@@ -187,10 +208,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     bottom: -25,
     borderWidth: 2,
-    borderColor: GRAY,
+    // borderColor: GRAY,
   },
   modalContent: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
+    // backgroundColor: 'red',
     height: 120,
     width: 200,
     position: 'absolute',
@@ -200,7 +222,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   modal: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
+    backgroundColor: 'red',
     padding: 20,
     borderRadius: 10,
   },

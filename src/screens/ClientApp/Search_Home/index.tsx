@@ -1,25 +1,27 @@
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import {View, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Row} from 'native-base';
-import {Ionicons, MaterialIcons} from '../../../utils/AppConstants';
+import {
+  Ionicons,
+  MaterialIcons,
+  multiThemeColor,
+} from '../../../utils/AppConstants';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../services/ReduxToolkit/store';
 import {DilemmaType} from '../../../services/ReduxToolkit/argumentSlice';
-import {GRAY, WHITE} from '../../../styles/Colors';
+// import {GRAY, WHITE} from '../../../styles/Colors';
+import FormattedList from '../../../CustomComponents/FormattedList';
 
 const SearchHome = () => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState<DilemmaType[]>([]);
   const FirstArray = useSelector((state: RootState) => state.data.array1);
+
+  const [selectedItemCount, setSelectedItemCount] = useState(0);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [resetSelection, setResetSelection] = useState(false);
 
   useEffect(() => {
     if (searchQuery === '') {
@@ -34,9 +36,9 @@ const SearchHome = () => {
   }, [searchQuery, FirstArray]);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: multiThemeColor().main_background}}>
       <Row
-        style={{backgroundColor: GRAY, padding: 10}}
+        style={{backgroundColor: multiThemeColor().GRAY, padding: 10}}
         justifyContent={'space-between'}
         alignItems={'center'}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -50,14 +52,13 @@ const SearchHome = () => {
           onChangeText={text => setSearchQuery(text)}
         />
       </Row>
-      <FlatList
-        data={filteredItems}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <View style={styles.listItem}>
-            <Text style={styles.itemText}>{item.TopicName}</Text>
-          </View>
-        )}
+      <FormattedList
+        TopicList={filteredItems}
+        arrayName="filteredItems"
+        setSelectedCount={setSelectedItemCount}
+        setSelectedItems={setSelectedItems}
+        resetSelection={resetSelection}
+        setResetSelection={setResetSelection}
       />
     </View>
   );
@@ -69,11 +70,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
   },
-  listItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: GRAY,
-  },
+  // listItem: {
+  //   padding: 15,
+  //   borderBottomWidth: 1,
+  //   borderBottomColor: GRAY,
+  // },
   itemText: {
     fontSize: 16,
     color: 'black',

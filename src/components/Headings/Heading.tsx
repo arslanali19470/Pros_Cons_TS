@@ -1,14 +1,20 @@
-import * as React from "react";
-import { StyleSheet, Text, TouchableOpacity, TextStyle, ViewStyle } from "react-native";
+import * as React from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import {
   multiThemeColor,
   normalized,
   normalizedFont,
-} from "../../utils/AppConstants";
-import { View } from "native-base";
+} from '../../utils/AppConstants';
+import {View} from 'native-base';
 // import { BackButton } from "../../assets/Svg";
-import { useStackNavigator } from "../../utils/HandleNavigation";
-import Space from "../spacer/Space";
+import {useStackNavigator} from '../../utils/HandleNavigation';
+import Space from '../spacer/Space';
 
 interface HeadingProps {
   text: string;
@@ -37,7 +43,7 @@ const Heading: React.FC<HeadingProps> = ({
   style, // Changed to accept style prop
   ...restProps // Other props
 }) => {
-  const { goBack } = useStackNavigator();
+  const {goBack} = useStackNavigator();
   return (
     <>
       {!backBtn && (
@@ -47,7 +53,7 @@ const Heading: React.FC<HeadingProps> = ({
               textAlign: textAlign,
               fontSize: fontSize || normalizedFont.rf(2.5),
               fontWeight: weight,
-              color: color || multiThemeColor().black,
+              color: color || multiThemeColor().textcolor,
               fontFamily: fontFamily,
               marginLeft: marginLeft,
               marginTop: marginTop,
@@ -69,13 +75,12 @@ const Heading: React.FC<HeadingProps> = ({
               textAlign: textAlign,
               fontSize: fontSize || normalizedFont.rf(2.5),
               fontWeight: weight,
-              color: color || multiThemeColor().black,
+              color: color || multiThemeColor().textcolor,
               fontFamily: fontFamily,
               paddingHorizontal: normalized.hp(3),
               marginLeft: marginLeft,
               marginTop: marginTop,
-            }}
-          >
+            }}>
             {text}
           </Text>
         </View>
@@ -87,7 +92,7 @@ export default Heading;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

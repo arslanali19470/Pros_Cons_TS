@@ -1,7 +1,11 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState, useCallback} from 'react';
 import Space from '../../../components/spacer/Space';
-import {LinearGradient, MaterialIcons} from '../../../utils/AppConstants';
+import {
+  LinearGradient,
+  MaterialIcons,
+  multiThemeColor,
+} from '../../../utils/AppConstants';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {DrawerParamList} from '../../../navigation/Drawer_Navigation/DrawerNavigation';
 import {
@@ -12,7 +16,7 @@ import {
 import FormattedList from '../../../CustomComponents/FormattedList';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../../services/ReduxToolkit/store';
-import {GRAY} from '../../../styles/Colors';
+// import {GRAY} from '../../../styles/Colors';
 import {Row} from 'native-base';
 import Heading from '../../../components/Headings/Heading';
 import {
@@ -71,9 +75,13 @@ const Home_Dilemmas: React.FC<DrawerScreenProps> = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: multiThemeColor().main_background}}>
       {selectedItemCount > 0 ? (
-        <View style={{backgroundColor: GRAY, padding: 15}}>
+        <View
+          style={{
+            backgroundColor: multiThemeColor().GRAY,
+            padding: 15,
+          }}>
           <Row alignItems={'center'} justifyContent={'space-between'}>
             <Row space={7} alignItems={'center'}>
               <TouchableOpacity
@@ -102,7 +110,11 @@ const Home_Dilemmas: React.FC<DrawerScreenProps> = ({navigation}) => {
           </Row>
         </View>
       ) : (
-        <View style={{backgroundColor: GRAY, padding: 15}}>
+        <View
+          style={{
+            backgroundColor: multiThemeColor().GRAY,
+            padding: 15,
+          }}>
           <Row alignItems={'center'} justifyContent={'space-between'}>
             <Row space={7} alignItems={'center'}>
               <TouchableOpacity

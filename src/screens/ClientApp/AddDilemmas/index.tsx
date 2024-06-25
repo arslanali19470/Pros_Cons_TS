@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, TextInput, Alert} from 'react-native';
 import {VStack} from 'native-base';
 import Gradiant_Button from '../../../components/Gradiant_Button/Gradiant_Button';
-import {BLUE1} from '../../../styles/Colors';
+// import {BLUE1} from '../../../styles/Colors';
 import Space from '../../../components/spacer/Space';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -15,6 +15,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/MainNavigation/MainNavigation';
 import {DilemmaType} from '../../../services/ReduxToolkit/dataSlice';
 import {RootState} from '../../../services/ReduxToolkit/store';
+import {multiThemeColor} from '../../../utils/AppConstants';
 
 type AddDilemmasNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -120,7 +121,7 @@ const Add_Dilemmas: React.FC<AddDilemmasScreenProps> = ({
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: multiThemeColor().main_background}}>
       <Space height={20} />
       <VStack justifyContent="space-between" style={{flex: 1}}>
         <TextInput
@@ -132,12 +133,13 @@ const Add_Dilemmas: React.FC<AddDilemmasScreenProps> = ({
             height: textHeight,
             textAlignVertical: 'top',
             borderWidth: 2,
-            borderColor: BLUE1,
+            borderColor: multiThemeColor().BLUE1,
             width: '90%',
             alignSelf: 'center',
             fontSize: 18,
             borderRadius: 10,
             padding: 10,
+            color: multiThemeColor().textcolor,
           }}
           placeholder="Description"
           placeholderTextColor="gray"

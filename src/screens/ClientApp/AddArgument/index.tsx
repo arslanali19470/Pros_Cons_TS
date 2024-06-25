@@ -6,7 +6,7 @@ import CircularBorder from '../../../components/CircularBorder/CircularBorder';
 import Heading from '../../../components/Headings/Heading';
 import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group';
 import GradientButton from '../../../components/Gradiant_Button/Gradiant_Button';
-import {BLUE1, BLUE2} from '../../../styles/Colors';
+// import {BLUE1, BLUE2} from '../../../styles/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -20,6 +20,7 @@ import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/MainNavigation/MainNavigation';
 import {RootState} from '../../../services/ReduxToolkit/store';
+import {multiThemeColor} from '../../../utils/AppConstants';
 
 type ArgumentNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -144,45 +145,65 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
     }
   };
 
+  const BoderColor = multiThemeColor().textcolor;
+
   const radioButtons = useMemo<RadioButtonProps[]>(
     () => [
       {
         id: '1',
         label: 'Pros',
         value: 'Pros',
+        borderColor: BoderColor, // Change border color here
+        color: BoderColor, // Change inner dot color here
       },
       {
         id: '2',
         label: 'Cons',
         value: 'Cons',
+        borderColor: BoderColor, // Change border color here
+        color: BoderColor, // Change inner dot color here
       },
     ],
     [],
   );
 
   return (
-    <View style={{flex: 1, padding: 10, justifyContent: 'space-between'}}>
+    <View
+      style={{
+        flex: 1,
+        padding: 10,
+        justifyContent: 'space-between',
+        backgroundColor: multiThemeColor().main_background,
+      }}>
       <View>
         <Space height={30} />
         <TextInput
           multiline={true}
           numberOfLines={10}
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            {
+              borderColor: multiThemeColor().BLUE1,
+              color: multiThemeColor().textcolor,
+            },
+          ]}
           placeholder="Description"
           placeholderTextColor={'gray'}
           value={textInput}
           onChangeText={handleTextInputChange}
         />
         <Space height={30} />
-        <CircularBorder b_color={BLUE1} style={{alignSelf: 'center'}}>
+        <CircularBorder
+          b_color={multiThemeColor().BLUE1}
+          style={{alignSelf: 'center'}}>
           <Heading text={String(sliderValue)} />
         </CircularBorder>
         <Slider
           style={styles.slider}
           minimumValue={0}
           maximumValue={10}
-          minimumTrackTintColor={BLUE2}
-          maximumTrackTintColor={BLUE1}
+          minimumTrackTintColor={multiThemeColor().BLUE2}
+          maximumTrackTintColor={multiThemeColor().BLUE1}
           value={sliderValue}
           onValueChange={handleSliderChange}
         />
@@ -193,7 +214,7 @@ const AddArgument: React.FC<ArgumentScreenProps> = ({route}) => {
             radioButtons={radioButtons}
             onPress={handleRadioButtonChange}
             selectedId={selectedId}
-            labelStyle={{color: 'black'}}
+            labelStyle={{color: multiThemeColor().textcolor}} // Changed the label color here
           />
         </View>
       </View>
@@ -235,7 +256,7 @@ const styles = StyleSheet.create({
     height: 80,
     textAlignVertical: 'top',
     borderWidth: 2,
-    borderColor: BLUE1,
+    // borderColor: BLUE1,
     width: '90%',
     alignSelf: 'center',
     fontSize: 18,
