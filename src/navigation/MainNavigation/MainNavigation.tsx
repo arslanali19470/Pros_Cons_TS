@@ -1,4 +1,3 @@
-// MainNavigation.tsx
 import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StatusBar} from 'react-native';
@@ -12,8 +11,10 @@ import {
   DilemmaType,
   ArgumentType,
 } from '../../services/ReduxToolkit/argumentSlice';
+import SplashScreen from '../../screens/ClientApp/SplashScreen'; // Import SplashScreen
 
 export type RootStackParamList = {
+  SplashScreen: undefined;
   DrawerNavigation: undefined;
   SearchHome: undefined;
   ProandCons: {selectedItem: DilemmaType};
@@ -33,9 +34,11 @@ const MainNavigation: React.FC = () => {
         backgroundColor={isDarkTheme ? BLACK : WHITE}
       />
       <Stack.Navigator
+        initialRouteName="SplashScreen" // Set SplashScreen as the initial route
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="DrawerNavigation" component={DrawerNavigation} />
         <Stack.Screen
           name="Dilemmas Description"

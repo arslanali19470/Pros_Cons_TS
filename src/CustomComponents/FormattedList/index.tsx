@@ -21,7 +21,7 @@ interface FormattedListProps {
   setSelectedItems: (items: string[]) => void;
   resetSelection: boolean;
   setResetSelection: (reset: boolean) => void;
-  updateSelection: (items: string[]) => void; // New prop
+  // updateSelection: (items: string[]) => void;
 }
 
 const FormattedList: React.FC<FormattedListProps> = ({

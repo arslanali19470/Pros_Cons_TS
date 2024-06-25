@@ -15,10 +15,8 @@
     "noImplicitAny": true
   },
   "include": [
-    "src/**/*" // Adjust the path to match your project structure
+    "src/**/*",
+    "src/assets/assets.d.ts" // Ensure this matches your project structure
   ],
-  "exclude": [
-    "node_modules",
-    "**/__tests__/*" // Exclude test files
-  ]
+  "exclude": ["node_modules", "**/__tests__/*"]
 }
