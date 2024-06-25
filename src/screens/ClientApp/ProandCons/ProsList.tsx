@@ -41,18 +41,19 @@ const ProsList: React.FC<ProsListProps> = ({selectedItem}) => {
   };
 
   return (
-    <View style={{width: '70%', padding: 5, borderRadius: 5}}>
+    <View style={{width: '65%', padding: 5, borderRadius: 5}}>
       {filteredProsArray.map((item, index) => (
         <TouchableOpacity onPress={() => handleProsDetails(item)} key={index}>
           <Row
             justifyItems="center"
             alignItems="center"
             space={2}
-            style={[
-              styles.circle,
-              {backgroundColor: multiThemeColor().CONS_COLOR},
-            ]}>
-            <View style={styles.circle}>
+            style={styles.row}>
+            <View
+              style={[
+                styles.circle,
+                {backgroundColor: multiThemeColor().CONS_COLOR},
+              ]}>
               <Heading text="10" color="white" fontSize={15} />
             </View>
             <Heading text={item.description} fontSize={14} />
